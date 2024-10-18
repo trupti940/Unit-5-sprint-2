@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Components in React</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: rgb(238, 238, 238);
+        }
+
+        h1 {
+            font-size: 45px;
+            font-weight: 1000;
+        }
+
+        .highlight {
+            color: #4CAF50;
+            text-decoration: underline solid #b3eab6;
+            text-decoration-thickness: 10px;
+            /* text-underline-offset: 10px; */
+        }
+
+
+        .inner_container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .Box_Step {
+            width: 25%;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .Number_Steps {
+            background-color: #d1f5d3;
+            color: #036206;
+            display: inline-block;
+            padding: 8px 11px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .Box_Step h2 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .Box_Step p {
+            font-size: 1.3rem;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        function Header() {
+            return (
+                <h1>
+                    Getting started in <span className='highlight'>3 easy steps</span>
+                </h1>
+            );
+        }
+
+        function BoxStep({ NumberOfSteps, title, description }) {
+            return (
+                <div className="Box_Step">
+                    <div className="Number_Steps">{NumberOfSteps}</div>
+                    <h2>{title}</h2>
+                    <p>{description}</p>
+                </div>
+            );
+        }
+
+        function Container() {
+            return (
+                <div className="inner_container">
+                    <BoxStep
+                        NumberOfSteps='01'
+                        title="Find your template"
+                        description="Every template is embedded within an iframe, so you can easily check what they look like and test the responsive behaviour."
+                    />
+
+                    <BoxStep
+                        NumberOfSteps='02'
+                        title="Copy the code"
+                        description="Click the code tab to see the actual source code of the template. Copy and paste it into your project and adjust it to your needs."
+                    />
+
+                    <BoxStep
+                        NumberOfSteps='03'
+                        title="Enjoy your free time"
+                        description="You've just saved yourself a bunch of time not building the same stuff over and over again. Enjoy your free time, and build business features."
+                    />
+                </div>
+            );
+        }
+
+        function App() {
+            return (
+                <>
+                    <Header />
+                    <Container />
+                </>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

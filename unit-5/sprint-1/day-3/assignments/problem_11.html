@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .feedback-form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        
+      }
+
+      .feedback-form label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .feedback-form input, 
+      .feedback-form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+
+      .feedback-form button {
+        padding: 10px 20px;
+        margin-right: 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .feedback-form button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      const Step1 = ({ formData, onInputChange, onNext }) => {
+        const handleChange = (e) => {
+          onInputChange(e.target.name, e.target.value);
+        };
+
+        return (
+          <div>
+            <h2>Step 1: General Information</h2>
+            <label>
+              Name:
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Product Experience:
+              <select
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+              >
+                <option value="">Select</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="expert">Expert</option>
+              </select>
+            </label>
+            <button onClick={onNext}>Next</button>
+          </div>
+        );
+      };
+
+      const Step2 = ({ formData, onInputChange, onNext, onBack }) => {
+        const [featureFeedback, setFeatureFeedback] = useState(formData.featureFeedback || {});
+
+        const handleFeatureFeedbackChange = (feature, value) => {
+          setFeatureFeedback({ ...featureFeedback, [feature]: value });
+          onInputChange("featureFeedback", { ...featureFeedback, [feature]: value });
+        };
+
+        return (
+          <div>
+            <h2>Step 2: Product Feature Feedback</h2>
+            <label>
+              Usability:
+              <select
+                value={featureFeedback.usability || ""}
+                onChange={(e) => handleFeatureFeedbackChange("usability", e.target.value)}
+              >
+                <option value="">Select</option>
+                <option value="satisfied">Satisfied</option>
+                <option value="dissatisfied">Dissatisfied</option>
+              </select>
+            </label>
+
+            {featureFeedback.usability === "dissatisfied" && (
+              <label>
+                Suggestions:
+                <input
+                  type="text"
+                  name="suggestions"
+                  value={formData.suggestions}
+                  onChange={(e) => onInputChange("suggestions", e.target.value)}
+                />
+              </label>
+            )}
+            
+            <button onClick={onBack}>Back</button>
+            <button onClick={onNext}>Next</button>
+          </div>
+        );
+      };
+
+      const StepSummary = ({ formData, onBack, onSubmit }) => {
+        return (
+          <div>
+            <h2>Step 3: Review and Submit</h2>
+            <div>
+              <h3>General Information</h3>
+              <p>Name: {formData.name}</p>
+              <p>Email: {formData.email}</p>
+              <p>Experience Level: {formData.experience}</p>
+            </div>
+            <div>
+              <h3>Product Feature Feedback</h3>
+              {Object.keys(formData.featureFeedback).map((feature) => (
+                <p key={feature}>
+                  {feature}: {formData.featureFeedback[feature]}
+                </p>
+              ))}
+            </div>
+            {formData.suggestions && (
+              <div>
+                <h3>Suggestions</h3>
+                <p>{formData.suggestions}</p>
+              </div>
+            )}
+
+            <button onClick={onBack}>Back</button>
+            <button onClick={onSubmit}>Submit</button>
+          </div>
+        );
+      };
+
+      const FeedbackForm = () => {
+        const [currentStep, setCurrentStep] = useState(1);
+        const [formData, setFormData] = useState({
+          name: "",
+          email: "",
+          experience: "",
+          featureFeedback: {},
+          suggestions: "",
+        });
+
+        const handleInputChange = (inputName, inputValue) => {
+          setFormData({
+            ...formData,
+            [inputName]: inputValue,
+          });
+        };
+
+        const handleNextStep = () => setCurrentStep(currentStep + 1);
+        const handlePreviousStep = () => setCurrentStep(currentStep - 1);
+        const handleSubmit = () => {
+          console.log("Submitted Feedback:", formData);
+          alert("Feedback submitted successfully!");
+        };
+
+        return (
+          <div className="feedback-form">
+            {currentStep === 1 && (
+              <Step1 formData={formData} onInputChange={handleInputChange} onNext={handleNextStep} />
+            )}
+            {currentStep === 2 && (
+              <Step2
+                formData={formData}
+                onInputChange={handleInputChange}
+                onNext={handleNextStep}
+                onBack={handlePreviousStep}
+              />
+            )}
+            {currentStep === 3 && (
+              <StepSummary formData={formData} onBack={handlePreviousStep} onSubmit={handleSubmit} />
+            )}
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<FeedbackForm />);
+    </script>
+  </body>
+</html>

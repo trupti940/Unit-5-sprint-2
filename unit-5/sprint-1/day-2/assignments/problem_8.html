@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic List Rendering</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        function Image({src}){
+            return <img src={src} alt="Gallery Image" style={{width:'250px',height:'250px',margin:'15px'}}/>;
+        }
+        function Gallery({ children }) {
+            return <div className="gallary-grid" style={{display:'flex',flexWrap:'wrap'}}>{children}</div>;
+        }
+
+        const galleryElement = (
+        <Gallery>
+            <Image src="https://huggingface.co/KappaNeuro/cute-animals/resolve/main/2321975.jpeg" />
+            <Image src="https://t3.ftcdn.net/jpg/07/37/16/14/360_F_737161452_oOt3F4JnOq2YzUqCX2NgKul7sfFrpqAp.jpg" />
+  
+        </Gallery>
+    );
+        const reactRoot = ReactDOM.createRoot(document.getElementById('root'));
+        reactRoot.render(galleryElement)
+    </script>
+</body>
+
+</html>

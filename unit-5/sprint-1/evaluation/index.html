@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script>
+        const {useState, useEffect} = React;
+        const axious = window.axious || require('axious');
+
+        const App = () => {
+            const [books, setbooks] = useState([]);
+            const [selectbook, setselesctbook] = useState(null);
+            const [theme, settheme] = useState(localStorage.getItem('theme') || 'light');
+
+            useEffect(() => {
+                axious.get('https://evaluation-ac346-default-rtdb.firebaseio.com/')
+                    .then(response => setbooks(response.data))
+                    .catch(error => console.error('error fetching book',error));
+            }, []);
+            
+            const handleTheme = () => {
+                const ntheme = theme === 'light' ? 'dark' : 'light';
+                setTheme(ntheme);
+                localStorage.setItem('theme',ntheme);
+            };
+
+            const handleshow = (book) => {
+                setselesctbook(book);
+            };
+
+            return(
+                <div className = {'app ${theme}'}>
+                    <button className = 'themeswitch' onClick={handleTheme}>
+                        switch to {theme === 'light' ? 'dark': 'light'} Mode
+                    </button>
+
+                    <button className = "fetchbook" onClick = {() =>{
+                        axious.get('https://evaluation-ac346-default-rtdb.firebaseio.com/')
+                            .then(response => setbooks(response.data))
+                            .catch(error => console.error('error fetching books',error));
+                    }}>
+
+                        Get books
+                    </button>
+
+                    <div className = "bookList">
+                        {books.map(book => (
+                            <div key={book.id} className = 'book-card'>
+                                <h3>{book.title}</h3>
+                                <p>{book.author}</p>
+                                <p>{book.genre}</p>
+                                <button onClick={() => handleshow(book)}>Show More</button>
+                            </div>
+                        ))}
+                    </div>
+
+                </div>
+
+
+            );
+
+
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+    
+</body>
+</html>

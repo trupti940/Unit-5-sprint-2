@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    background-color: #6a1b9a;
+    color: white;
+    font-size: 24px;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+input[type="text"] {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.file-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}
+
+.file-list button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    text-align: left;
+}
+
+.bin-history-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.bin, .file-history {
+    width: 45%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.clear-btn {
+    margin-top: 10px;
+}
+
+
+#searchInput {
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+main {
+    display: flex;
+    justify-content: space-around;
+}
+
+#folders, #fileList {
+    width: 45%;
+}
+
+.folder, .file {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.folder:hover, .file:hover {
+    background-color: #f0f0f0;
+}
+
+#sortButton {
+    margin: 10px;
+}
+.file-container, .file-bin, .file-history {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.file-bin, .file-history {
+    width: 45%;
+}
+
+#fileContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.file-item {
+    cursor: pointer;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+.modal button {
+    margin: 10px;
+}

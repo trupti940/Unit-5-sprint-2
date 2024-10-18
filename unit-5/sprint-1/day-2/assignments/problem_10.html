@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Components in React</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #333;
+      margin-right: 50px;
+      width: 250px;
+      margin-left: 40px;
+      text-align: center;
+    }
+
+    .highlight {
+      color: #a86bf0;
+    }
+
+    p {
+      color: #282525;
+      width: 550px;
+    }
+
+    .plans {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    .plan {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      width: 65%;
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .plan h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .plan h2 {
+      font-size: 2rem;
+      margin: 20px 0;
+    }
+
+    .button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      height: 35px;
+      width: 130px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    .free-button {
+      background-color: #ccc;
+      color: #a86bf0;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .paid-button {
+      background-color: #a86bf0;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+
+    ul li {
+      padding: 5px 0;
+    }
+
+    ul li span {
+      color: green;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    // PlanFeature Component
+    const PlanFeature = ({ feature }) => {
+      return (
+        <li>
+          <i className="fas fa-check-circle" style={{ color: 'green', marginRight: '8px' }}></i>
+          {feature}
+        </li>
+      );
+    };
+
+    // Button Component
+    const Button = ({ isFree }) => {
+      const buttonClass = isFree ? "button free-button" : "button paid-button";
+      return (
+        <button className={buttonClass}>
+          Get Started
+        </button>
+      );
+    };
+
+    // PricingPlan Component
+    const PricingPlan = ({ plan }) => {
+      return (
+        <div className="plan">
+          <h3>{plan.title}</h3>
+          <ul>
+            {plan.features.map((feature, index) => (
+              <PlanFeature key={index} feature={feature} />
+            ))}
+          </ul>
+          <h2>{plan.price}</h2>
+          <Button isFree={plan.price === "Free"} />
+        </div>
+      );
+    };
+
+    // App Component
+    const App = () => {
+      const plans = [
+        {
+          title: "Starter",
+          features: ["1 lorem ipsum", "Lorem, ipsum dolor.", "Monthly Updates"],
+          price: "Free"
+        },
+        {
+          title: "Lorem Plus",
+          features: ["1 lorem ipsum", "Lorem, ipsum dolor.", "Monthly Updates"],
+          price: "$32.00"
+        },
+        {
+          title: "Lorem Pro",
+          features: ["1 lorem ipsum", "Lorem, ipsum dolor.", "Monthly Updates"],
+          price: "$50.00"
+        }
+      ];
+
+      return (
+        <div>
+          <div className="header">
+            <h1>
+              The Right Plan for <span className='highlight'>Your Business</span>
+            </h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam quod in iure vero. Facilis magnam, sed officiis commodi labore odit.</p>
+          </div>
+          <div className="plans">
+            {plans.map((plan, index) => (
+              <PricingPlan key={index} plan={plan} />
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

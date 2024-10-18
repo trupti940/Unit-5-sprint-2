@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JSX and Babel</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const App = () => (
+      <>
+      <img src="https://cdn-icons-png.freepik.com/512/15052/15052486.png" 
+           width="150px" 
+           height="120px" 
+           alt="placeholder"
+           style={{ display: "block", margin: "0 auto" }}/>
+      <h1 style={{textAlign:"center", fontSize:"60px", paddingBottom:"0px"}}>SUBSCRIBE</h1>
+      <p style={{textAlign:"center", fontSize:"30px"}}>Subscribe to our newsletter & stay up to date</p>
+      
+      <div style={{ textAlign: "center" }}>
+        <input 
+          type="text" 
+          placeholder="john@doe.net" 
+          style={{ 
+            borderRadius: "10px", 
+            padding: "10px", 
+            fontWeight: "bold", 
+            width: "200px", 
+            marginRight: "10px", 
+            background:"rgb(237, 242, 246)"
+          }} 
+        />
+        <button 
+          style={{ 
+            background: "blue", 
+            color: "white", 
+            borderRadius: "10px", 
+            padding: "10px", 
+            fontWeight: "bold", 
+            width: "200px", 
+            fontSize: "18px"
+          }}
+        >
+          Subscribe
+        </button>
+      </div>
+      </>
+    );
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App/>);
+    </script>
+  </body>
+</html>

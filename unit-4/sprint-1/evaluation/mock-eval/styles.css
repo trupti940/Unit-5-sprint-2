@@ -1,0 +1,29 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(231, 249, 249);
+}
+nav{
+    margin-bottom: 20px;
+}
+nav a{
+    margin-left: 10px;
+    text-decoration: none;
+    color:black;
+    font-weight: 400;
+}
+#user-cards,#carts{
+    display: flex;
+    flex-wrap: wrap;
+}
+.user-cards, .cart-item{
+    border : 1px solid black;
+    padding: 10px;
+    margin : 10px;
+    width:200px;
+    text-align: center;
+}
+button{
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: blue;
+}

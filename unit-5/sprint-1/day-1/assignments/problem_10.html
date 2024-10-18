@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>JSX and Babel</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const App = () => (
+            <>
+                <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRyacO5DJx7hwAhkpRNpzqop2SgNtiKWv8hqUvNmvPc4dpGVi4v" style={{ display: "block", width: "800px", height: "400px", borderRadius:"5px" }} />
+                <h1 style={{fontWeight:550, marginBottom:0}}>Automatic Watch</h1>
+                <h2 style={{marginTop:0, fontWeight: 400, marginBottom: 30}}>$350.00 USD</h2>
+                <p style={{fontSize: 20, color:"gray"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, fugiat. Ipsa, delectus numquam! Nesciunt, <br/>
+                     nihil explicabo at accusantium ea dicta adipisci.</p>
+                <p style={{fontSize: 18, fontWeight:500,paddingBottom: "30px", borderBottom: "0.1px grey solid"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque corrupti fuga natus impedit ipsum sequi temporibus<br/>
+                     a deleniti soluta, voluptatibus minima dolorum quisquam! Ipsum, excepturi.</p>
+                <h3>FEATURES</h3>
+                <div style={{ display: "flex", justifyContent: "start" }}>
+                    <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+                        <li>Chronograph</li>
+                        <li>Master Chronometer Certified</li>
+                        <li>Tachymeter</li>
+                    </ul>
+                    <ul style={{ listStyleType: "none", paddingLeft: "200px" }}>
+                        <li>Anti-magnetic</li>
+                        <li>Chronometer</li>
+                        <li>Small seconds</li>
+                    </ul>
+                </div>
+
+                <h5>PRODUCT DETAILS</h5>
+                <div style={{}}>
+                    <p style={{marginBottom:0}}><strong>Between lugs:</strong> 20 mm</p>
+                    <p style={{marginTop:"10px", marginBottom:0}}><strong><strong>Bracelet:</strong></strong> leather strap</p>
+                    <p style={{marginTop:"10px", marginBottom:0}}><strong><strong>Case:</strong></strong>Steel</p>
+                    <p style={{marginTop:"10px", marginBottom:0}}><strong>Case diameter:</strong> 42 mm</p>
+                    <p style={{marginTop:"10px", marginBottom:0}}><strong>Dial color:</strong> Black</p>
+                    <p style={{marginTop:"10px", marginBottom:0}}><strong>Crystal:</strong> Domed, scratch-resistant sapphire crystal with anti-reflective treatment inside</p>
+                    <p style={{marginTop:"10px"}}><strong>Water resistance:</strong> 5 bar (50 metres / 167 feet)</p>
+                </div>
+                <button style={{textAlign:"center", color:"white", background:"black", padding:"10px", width: 800, marginTop:30}}>ADD TO CART</button>
+            </>
+        )
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />)
+    </script>
+</body>
+
+</html>

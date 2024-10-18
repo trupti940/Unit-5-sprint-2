@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HEX Color Input</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #edd9b8;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 250px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .color-preview {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #000;
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const { useState } = React;
+
+        const HexColor = () => {
+            const [color, setColor] = useState('');
+            const [isValid, setIsValid] = useState(true);
+
+            const handleInput = (e) => {
+                const value = e.target.value;
+                setColor(value);
+
+                const hexPattern = /^#([0-9A-F]{3}){1,2}$/i;
+                setIsValid(hexPattern.test(value));
+            };
+
+            return (
+                <div className="container">
+                    <div className="input-container">
+                        <input
+                            type="text"
+                            value={color}
+                            onChange={handleInput}
+                            placeholder="Enter HEX color (like #FFFFFF)"
+                        />
+                    </div>
+
+                    <div
+                        className="color-preview"
+                        style={{ backgroundColor: isValid ? color : '#FFFFFF' }}
+                    ></div>
+
+                    {!isValid && color.length > 0 && (
+                        <p className="error-message">
+                            Invalid HEX color code. Please enter a valid code.
+                        </p>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.render(<HexColor />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>

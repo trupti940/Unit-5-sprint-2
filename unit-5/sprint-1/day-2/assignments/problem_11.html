@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Components in React</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMf3HnV3YbHUR49H1U4mIk36ANn0WqB4dGm4H4" crossorigin="anonymous">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li {
+            cursor: pointer;
+            color: #333;
+        }
+
+        .main-content {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .main-content h2 {
+            font-size: 36px;
+            margin: 20px 0;
+        }
+
+        .main-content p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            /* border-radius: 5px; */
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .image-container img {
+            width: 800px;
+            margin-top: 80px;
+            border-radius: 10px;
+        }
+
+
+        .broker-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+
+            font-size: 12px;
+            margin-right: 300px;
+
+        }
+
+        .broker-info .left {
+            width: 80%;
+            margin-left: 300px;
+        }
+
+        .broker-info .right {
+            max-width: 45%;
+            text-align: left;
+            margin-right: 40px;
+        }
+
+        .broker-info h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .broker-info ul {
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+
+            justify-content: space-between;
+            font-size: 10px;
+        }
+
+        .broker-info ul li {
+            width: 45%;
+
+
+            margin-bottom: 10px;
+
+            text-align: left;
+
+        }
+
+
+        .trust-ecosystem-container {
+            display: flex;
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 40px;
+
+            margin-left: 300px;
+
+        }
+
+
+        .trust-confidence {
+            background-color: #fff;
+            padding: 40px;
+            width: 500px;
+        }
+
+        .trust-confidence h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .trust-confidence p {
+            font-size: 12px;
+            margin-bottom: 20px;
+            width: 70%;
+        }
+
+
+        .product-ecosystem {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+
+            gap: 10px;
+            margin-top: 70px;
+
+
+
+        }
+
+        .product-ecosystem img {
+            width: 520px;
+            height: 530px;
+            margin-right: 220px;
+        }
+
+
+        .img-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+
+        }
+
+        .img-action p {
+            color: #1f88c5;
+            margin-right: 150px;
+            font-size: 14px;
+        }
+
+        .pricing-section {
+            margin: 40px;
+            padding: 40px;
+            padding-top: 0px;
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+            margin-left: 350px;
+
+        }
+
+        .pricing-section h2 {
+            font-size: 24px;
+
+            margin-top: 0px;
+        }
+
+        .pricing-section p {
+            font-size: 12px;
+
+            width: 300px;
+
+        }
+
+        .para span {
+            color: #1f88c5;
+            font-size: 13px;
+        }
+
+        .pricing-section .pricing-details {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .pricing-box {
+            text-align: center;
+            border: 1px solid #cfcbcb;
+            height: 140px;
+            width: 180px;
+        }
+
+        .pricing-box h3 {
+            font-size: 36px;
+            color: #007bff;
+
+        }
+
+        .pricing-box p {
+            font-size: 12px;
+            color: #666;
+            width: 140px;
+            text-align: center;
+            margin-left: 30px;
+
+        }
+
+        .unbeatable {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .eduction-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px;
+            gap: 30px;
+            margin-left: 300px;
+        }
+
+        .e-left img {
+            width: 300px;
+            height: auto;
+        }
+
+        .e-right {
+            flex: 1;
+        }
+
+        .e-right h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .e-right p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+            width: 380px;
+        }
+
+        .e-right span {
+            font-size: 12px;
+            color: #1f88c5;
+            cursor: pointer;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .account {
+            text-align: center;
+        }
+
+        .account p {
+            font-size: 13px;
+        }
+
+        .abheading {
+            padding: 40px;
+            margin-left: 250px;
+            margin-right: 280px;
+        }
+
+        .abheading h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 600px;
+            margin-left: 120px;
+        }
+
+        .about-content {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .about-content p {
+            width: 30%;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const Header = () => {
+            return (
+                <header className="header">
+                    <h1>Zerodha</h1>
+                    <ul className="nav-links">
+                        <li>Signup</li>
+                        <li>About</li>
+                        <li>Products</li>
+                        <li>Pricing</li>
+                        <li>Support</li>
+                        <li><i className="fas fa-bars" style={{ color: '#000000' }}></i></li>
+                    </ul>
+                </header>
+            );
+        };
+
+        const ImageContainer = () => {
+            return (
+                <div className="image-container">
+                    <img src="https://lh3.googleusercontent.com/ty0xVf4-igm6vsaLRSNiZjqsEFBLWF7ALvYsbcPY612D4gZZFDOmhjxscbCfCH2tBwXeA3DTFPDIJH1e8dUKqdzucfo3dvWSL2wQ4IobiGpmqUIj1UY=w700" alt="Dashboard" />
+                </div>
+            );
+        };
+
+        const MainContent = () => {
+            return (
+                <div className="main-content">
+                    <h2>Invest in everything</h2>
+                    <p>Online platform to invest in stocks, derivatives, mutual funds, and more</p>
+                    <button className="cta-button">Sign up now</button>
+                </div>
+            );
+        };
+
+        const BrokerInfo = () => {
+            return (
+                <div className="broker-info">
+                    <div className="left">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBcJl63OHpReleBeueIau6nEM9iLyqpDndxNEp5u-5uueNLuAD" alt="Zerodha product ecosystem" />
+                    </div>
+                    <div className="right">
+                        <h3>Largest stock broker in India</h3>
+                        <p>1.5+ Crore Zerodha clients contribute to over 15% of all retail order volumes in India daily by trading and investing in:</p>
+                        <ul>
+                            <li>Futures and Options</li>
+                            <li>Commodity derivatives</li>
+                            <li>Currency derivatives</li>
+                            <li>Stocks and IPOs</li>
+                            <li>Direct mutual funds</li>
+                            <li>Bonds and Govt. Securities</li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        };
+
+        const TrustConfidence = () => {
+            return (
+                <div className="trust-ecosystem-container">
+                   
+                    <div className="trust-confidence">
+                        <h3>Trust with confidence</h3>
+                        <h4>Customer-first always</h4>
+                        <p>That's why 1.5+ crore customers trust Zerodha with ₹4.5+ lakh crores worth of equity investments.</p><br />
+                        <h4>No spam or gimmicks</h4>
+                        <p>No gimmicks, spam, or annoying push notifications. High-quality apps at your own pace, the way you like.</p><br />
+                        <h4>The Zerodha universe</h4>
+                        <p>Not just an app, but a whole ecosystem. Our investments in 30+ fintech startups offer you tailored services specific to your needs.</p><br />
+                        <h4>Do better with money</h4>
+                        <p>With initiatives like Nudge and Kill Switch, we don't just facilitate transactions, but actively help you do better with your money.</p>
+                    </div>
+
+                    <div className="img-action">
+                        <div className="product-ecosystem">
+                            <img src="https://zerodha.com/static/images/ecosystem.png" alt="Streak" />
+                        </div>
+                        <div className="product-actions">
+                            <p>Explore our products → Try Kite demo → </p>
+
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const PricingSection = () => {
+            return (
+                <div className="unbeatable">
+                    <div className="pricing-section">
+                        <div className="para">
+                            <h2>Unbeatable pricing</h2>
+                            <p> We pioneered the concept of discount braking and price transparency in India. Flat fees and no hidden charges.</p>
+                            <span>See pricing →</span>
+                        </div>
+                        <div className="pricing-details">
+                            <div className="pricing-box">
+                                <h3>₹0</h3>
+                                <p>Free equity delivery and direct mutual funds</p>
+                            </div>
+                            <div className="pricing-box">
+                                <h3>₹20</h3>
+                                <p>Intraday and F&O</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        const Education = () => {
+            return (
+                <div className="eduction-info">
+                    <div className="e-left">
+                        <img src="https://zerodha.com/static/images/index-education.svg" />
+                    </div>
+                    <div className="e-right">
+                        <h3>Free and open market education</h3>
+                        <p>Varsity, the largest online stock market education book in the world covering everything from the basics to advanced trading.
+                        </p>
+                        <span>Varsity →
+                        </span>
+
+                        <p>Trading Q&A, the most active trading and investment community in India for all your market related queries.
+
+
+                        </p>
+                        <span>Trading Q&A →
+                        </span>
+
+                    </div>
+                </div>
+            );
+        };
+
+        const Lastheading = () => {
+            return (
+                <div className="account">
+                    <h2>Open a Zerodha account</h2>
+                    <p>Modern platforms and apps, 20 investments, and flat 220 intraday and F&O trades.</p>
+                    <button className="cta-button">Sign up now</button>
+                </div>
+            )
+        }
+
+        const Aboutheading = () => {
+            return (
+                <div className="abheading">
+                    <h2>We pioneered the discount broking model in India. Now, we are breaking ground with our technology.</h2>
+                    <div className="about-content">
+                        <p>We kick-started operations on the 15th of August, 2010 with the goal of breaking all barriers that traders and investors face in India in terms of cost, support, and technology. We named the company Zerodha, a combination of Zero and "Rodha", the Sanskrit word for barrier.<br></br><br></br>Today, our disruptive pricing models and in-house technology have made us the biggest stock broker in India.<br></br><br></br> Over 1 Crore clients place millions of orders every day through our powerful ecosystem of investment platforms, contributing over 15% of all Indian retail trading volumes.</p>
+                        <p>In addition, we run a number of popular open online educational and community initiatives to empower retail traders and investors.<br></br><br></br>Rainmatter, our fintech fund and incubator, has invested in several fintech startups with the goal of growing the Indian capital markets.<br></br><br></br> And yet, we are always up to something new every day. Catch up on the latest updates on our blog or see what the media is saying about us.</p>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            return (
+                <div>
+                    <Header />
+                    <ImageContainer />
+                    <MainContent />
+                    <BrokerInfo />
+                    <TrustConfidence />
+                    <PricingSection />
+                    <Education />
+                    <Lastheading />
+                    <Header />
+                    <Aboutheading />
+
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>

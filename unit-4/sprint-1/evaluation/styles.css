@@ -1,0 +1,38 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: aquamarine;
+    display:flex;
+    justify-content: center;
+}
+
+#file-system{
+    display:flex;
+    width : 75%;
+}
+
+#folder-container,#files-container{
+    background-color: aqua;
+    overflow-y: auto;
+
+}
+
+.folder{
+    background-color: aliceblue;
+}
+
+.file{
+    background-color: beige;
+    padding:10px;
+    border:1px solid black;
+}
+
+.file:hover{
+    background-color: blue;
+}
+
+button{
+    cursor: pointer;
+}
+button:hover{
+    background-color: blueviolet;
+}

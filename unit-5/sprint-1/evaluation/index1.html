@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Portal</title>
+    <style>
+        body{
+            font-family: sans-serif;
+            background-color: rgb(192, 240, 244);
+        }
+        .job_portal{
+            max-width: 700px;
+            margin:15px auto;
+            padding:20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;;
+        }
+        h1{
+            text-align: center;
+        }
+        section{
+            margin-bottom: 15px;
+        }
+        form{
+            display:flex;
+            flex-direction: column;
+        }
+        input{
+            margin-bottom: 12px;
+            padding:8px;
+            border-radius:1px solid 5px;
+        }
+        button{
+            padding: 13px;
+            background-color: rgb(11, 159, 218);
+            color:white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: rgb(77, 77, 241);
+        }
+        
+
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+<script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+
+    const App= () => {
+        const [dataForm, setDataForm] = React.useState({
+            "comapny": "",
+            "postedAt": "",
+            "city": "",
+            "location": "",
+            "role": "",
+            "level": "",
+            "contract": "",
+            "position": "",
+            "language": ""
+
+        });
+
+        const [jobList, setJobList] = React.useState([]);
+        const [searchFilter, setSearchFilter] = React.useState('');
+
+        React.useEffect(() => {
+            const storedJobs = JSON.parse(localStorage.getItem("jobs")) || [];
+            setJobList(storedJobs);
+        }, []);
+
+        const handleChange = (e) => {
+            const { name, value } = e.target;
+            setDataForm({...dataForm,[name]:value});
+            
+        };
+
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            const newJob = {
+                ...dataForm,
+                postedAt: new Date().toISOString().split('T')[0]
+            };
+            onJobPosted(newJob);
+            const updatedJobList = [...jobList, newJob];
+            setJobList(updatedJobList);
+            localStorage.setItem('jobs', JSON.stringify(updatedJobList));
+            setDataForm({
+                "comapny": "",
+                "postedAt": "",
+                "city": "",
+                "location": "",
+                "role": "",
+                "level": "",
+                "contract": "",
+                "position": "",
+                "language": ""
+
+            });
+
+        };
+       
+
+        return (
+            <div className="job_portal">
+                <h1>Job Portal</h1>
+
+                <section className="job_posting">
+                    <h2> Post a Job</h2>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            name="company"
+                            placeholder="Companey Name"
+    
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="date"
+                            name="postedAt"
+                            
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="city"
+                            placeholder="City"
+                           
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="location"
+                            placeholder="Location"
+                            
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="role"
+                            placeholder="Role (like,Frondend)"
+                            
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="level"
+                            placeholder="Level (like,Junior)"
+                            
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="contract"
+                            placeholder="Contract (like,Full Time)"
+                            
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="position"
+                            placeholder="Position (like,Backend Developer)"
+                            
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="language"
+                            placeholder="Language (like,Java)"
+                            
+                            onChange={handleChange}
+                            required
+                        />
+                        <button type="submit">Submit</button>
+                    </form>
+                </section>
+
+                <section className="job_listing">
+                    <h2>Job Listing</h2>
+                    <input
+                        type="text"
+                        placeholder="Search by Programming Language"
+                        
+                        onChange={(e) => setSearchFilter(e.target.value)}
+                    />
+                    <ul>
+                        {filteredJob.map((job, index) => (
+                            <li key={index}>
+                                <h3>{job.position}</h3>
+                                <p>{job.comapny} - {job.location} ({job.city})</p>
+                                <p>Role:{job.role} | Level: {job.level} | Contract:{job.contract}</p>
+                                <p>Language: {job.language} | PostedAt: {job.postedAt}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            </div>
+        );
+    };
+
+
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(<App />)
+</script>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Hobbies Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #c4efeb;
+      }
+      #root {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 400px;
+      }
+      button {
+        margin-top: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        background-color: #0aa1a3;
+        color: white;
+        margin-right: 20px;
+      }
+      .remove-btn {
+        background-color: rgb(237, 110, 37);
+        margin-left: 10px;
+        margin-bottom: 15px;
+      }
+      input {
+        width: calc(100% - 50px);
+        padding: 8px;
+        font-size: 16px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .hobby-input {
+        display: flex;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+    const { createRoot } = ReactDOM; 
+
+    const DynamicHobbiesForm = () => {
+      const [hobbies, setHobbies] = useState(['']); 
+
+      const handleInputChange = (index, event) => {
+        const newHobbies = [...hobbies];
+        newHobbies[index] = event.target.value;
+        setHobbies(newHobbies);
+      };
+
+      const addHobby = () => {
+        setHobbies([...hobbies, '']);
+      };
+
+      const removeHobby = (index) => {
+        if (index > 0) { 
+          const newHobbies = hobbies.filter((_, i) => i !== index);
+          setHobbies(newHobbies);
+        }
+      };
+
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('Hobbies:', hobbies);
+      };
+
+      return (
+        <form onSubmit={handleSubmit}>
+          <h2>Enter Your Hobbies</h2>
+          {hobbies.map((hobby, index) => (
+            <div key={index} className="hobby-input">
+              <input
+                type="text"
+                value={hobby}
+                onChange={(e) => handleInputChange(index, e)}
+                placeholder={`Hobby ${index + 1}`}
+              />
+              
+              {index > 0 && (
+                <button
+                  type="button"
+                  className="remove-btn"
+                  onClick={() => removeHobby(index)}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          ))}
+          <button type="button" onClick={addHobby}>
+            Add Hobby
+          </button>
+          <button type="submit">Submit</button>
+        </form>
+      );
+    };
+
+    
+    const rootElement = document.getElementById('root');
+    const root = createRoot(rootElement); 
+    root.render(<DynamicHobbiesForm />);
+  </script>
+</html>

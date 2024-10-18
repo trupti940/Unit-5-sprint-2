@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profiles</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      .search-bar {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .search-bar input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .user-profile {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: #f0c5ec;
+      }
+
+      .user-profile h2 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #333;
+      }
+
+      .user-profile p {
+        margin: 5px 0;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      const users = [
+        { id: 1, name: "Alice Johnson", email: "alice@example.com" },
+        { id: 2, name: "Bob Smith", email: "bob@example.com" },
+        { id: 3, name: "Charlie Brown", email: "charlie@example.com" },
+        { id: 4, name: "Anita Raj", email: "david@example.com" },
+        { id: 5, name: "Sumit Kagale", email: "eva@example.com" },
+      ];
+
+      const UserProfile = ({ user }) => {
+        return (
+          <div className="user-profile">
+            <h2>{user.name}</h2>
+            <p>{user.email}</p>
+          </div>
+        );
+      };
+
+      const UserProfileList = () => {
+        const [searchQuery, setSearchQuery] = React.useState("");
+        const [filteredUsers, setFilteredUsers] = React.useState(users);
+
+        const handleSearch = (e) => {
+          const query = e.target.value.toLowerCase();
+          setSearchQuery(query);
+          const filtered = users.filter((user) =>
+            user.name.toLowerCase().includes(query)
+          );
+          setFilteredUsers(filtered);
+        };
+
+        return (
+          <div className="container">
+            <h1>User Profiles</h1>
+            <div className="search-bar">
+              <input
+                type="text"
+                placeholder="Search by name..."
+                value={searchQuery}
+                onChange={handleSearch}
+              />
+            </div>
+            {filteredUsers.map((user) => (
+              <UserProfile key={user.id} user={user} />
+            ))}
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<UserProfileList />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Image Gallery</title>
+
+  
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <style>
+      
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .mobile-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        list-style: none;
+        padding: 0;
+        text-align: center;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .hamburger {
+        display: none;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        color: white;
+      }
+
+      
+      .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        transition: transform 0.3s;
+        background-color: #f9f9f9;
+      }
+
+      .card img {
+        width: 100%;
+        border-radius: 8px;
+      }
+
+      .card:hover {
+        transform: scale(1.05);
+      }
+
+      
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 20px;
+        padding: 20px;
+      }
+
+     
+      @media (max-width: 1200px) {
+        .gallery {
+          grid-template-columns: repeat(3, 1fr); 
+        }
+      }
+
+      @media (max-width: 768px) {
+        .gallery {
+          grid-template-columns: repeat(2, 1fr); 
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .hamburger {
+          display: block;
+        }
+
+        .mobile-links {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .gallery {
+          grid-template-columns: 1fr; 
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+  
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script type="text/babel">
+      const Navbar = () => {
+        const [isMobile, setIsMobile] = React.useState(false);
+
+        return (
+          <nav className="navbar">
+            <h1 className="logo">MyGallery</h1>
+            <ul className={isMobile ? "mobile-links" : "nav-links"}>
+              <li><a href="#home"><i className="fas fa-home"></i> Home</a></li>
+              <li><a href="#gallery"><i className="fas fa-image"></i> Gallery</a></li>
+              <li><a href="#contact"><i className="fas fa-phone"></i> Contact</a></li>
+              <li><a href="#about"><i className="fas fa-info-circle"></i> About</a></li>
+            </ul>
+            <button className="hamburger" onClick={() => setIsMobile(!isMobile)}>
+              &#9776;
+            </button>
+          </nav>
+        );
+      };
+
+      const ImageCard = ({ title, price }) => {
+        const imageUrl = "https://via.placeholder.com/110";
+
+        return (
+          <div className="card">
+            <img src={imageUrl} alt={title} />
+            <h3>{title}</h3>
+            <p>Price: ${price}</p>
+          </div>
+        );
+      };
+
+      const Gallery = () => {
+        const generateRandomTitle = () => {
+          const titles = ['Nature', 'City', 'Art', 'Mountains', 'Ocean'];
+          return titles[Math.floor(Math.random() * titles.length)];
+        };
+
+        const generateRandomPrice = () => (Math.random() * 100).toFixed(2);
+
+        return (
+          <div className="gallery">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <ImageCard 
+                key={index}
+                title={generateRandomTitle()}
+                price={generateRandomPrice()}
+              />
+            ))}
+          </div>
+        );
+      };
+
+      const App = () => {
+        return (
+          <div>
+            <Navbar />
+            <Gallery />
+          </div>
+        );
+      };
+
+    
+      const rootElement = document.getElementById('root');
+      const root = ReactDOM.createRoot(rootElement); 
+      root.render(<App />);
+    </script>
+  </body>
+</html>

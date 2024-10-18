@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgb(156, 236, 236);
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 200px;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 10px;
+            background-color: white;
+            border:1px solid gray;
+        }
+
+        .favorite-list, .forecast-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .favorite-list li, .forecast-list li {
+            margin: 5px 0;
+        }
+
+        .alert-list {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    <script type="text/babel">
+
+        const API_KEY = 'c6ee0595c560d9088a2b6a5dfd68cb1a'; // Replace with your OpenWeather API key
+
+        const WeatherApp = () => {
+            const [city, setCity] = React.useState('');
+            const [weatherData, setWeatherData] = React.useState(null);
+            const [forecastData, setForecastData] = React.useState(null);
+            const [favorites, setFavorites] = React.useState([]);
+            const [alerts, setAlerts] = React.useState([]);
+
+            const fetchWeatherData = async (city) => {
+                try {
+                    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
+                    setWeatherData(response.data);
+                    setAlerts(response.data.alerts || []);
+                    fetchForecastData(response.data.coord.lat, response.data.coord.lon);
+                } catch (error) {
+                    console.error("Error fetching weather data:", error);
+                    alert("City not found!");
+                }
+            };
+
+            const fetchForecastData = async (lat, lon) => {
+                try {
+                    const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`);
+                    setForecastData(response.data);
+                } catch (error) {
+                    console.error("Error fetching forecast data:", error);
+                }
+            };
+
+            const handleSearch = () => {
+                fetchWeatherData(city);
+                setCity('');
+            };
+
+            const addToFavorites = () => {
+                if (weatherData && !favorites.includes(weatherData.name)) {
+                    setFavorites([...favorites, weatherData.name]);
+                }
+            };
+
+            const removeFromFavorites = (city) => {
+                setFavorites(favorites.filter(fav => fav !== city));
+            };
+
+            const getLocationWeather = () => {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`);
+                    setWeatherData(response.data);
+                    fetchForecastData(latitude, longitude);
+                });
+            };
+
+            return (
+                <div>
+                    <h1>Weather App</h1>
+                    <input 
+                        type="text" 
+                        value={city} 
+                        onChange={(e) => setCity(e.target.value)} 
+                        placeholder="Enter city" 
+                    />
+                    <button onClick={handleSearch}>Search</button>
+                    <button onClick={addToFavorites}>Add to Favorites</button>
+                    <button onClick={getLocationWeather}>Use My Location</button>
+
+                    {weatherData && (
+                        <WeatherDisplay data={weatherData} />
+                    )}
+                    {forecastData && (
+                        <ForecastDisplay data={forecastData} />
+                    )}
+                    <FavoritesList favorites={favorites} removeFromFavorites={removeFromFavorites} />
+                    {alerts.length > 0 && (
+                        <WeatherAlerts alerts={alerts} />
+                    )}
+                </div>
+            );
+        };
+
+        const WeatherDisplay = ({ data }) => {
+            return (
+                <div>
+                    <h2>Current Weather in {data.name}</h2>
+                    <p>Temperature: {data.main.temp}°C</p>
+                    <p>Humidity: {data.main.humidity}%</p>
+                    <p>Wind Speed: {data.wind.speed} m/s</p>
+                    <p>Description: {data.weather[0].description}</p>
+                </div>
+            );
+        };
+
+        const ForecastDisplay = ({ data }) => {
+            return (
+                <div>
+                    <h2>5-Day Forecast</h2>
+                    <ul className="forecast-list">
+                        {data.list.map((item, index) => (
+                            <li key={index}>
+                                {new Date(item.dt * 1000).toLocaleDateString()}: {item.main.temp}°C - {item.weather[0].description}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        };
+
+        const FavoritesList = ({ favorites, removeFromFavorites }) => {
+            return (
+                <div>
+                    <h2>Favorite Cities</h2>
+                    <ul className="favorite-list">
+                        {favorites.map((city, index) => (
+                            <li key={index}>
+                                {city} <button onClick={() => removeFromFavorites(city)}>Remove</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        };
+
+        const WeatherAlerts = ({ alerts }) => {
+            return (
+                <div>
+                    <h2 className="alert-list">Weather Alerts</h2>
+                    <ul className="alert-list">
+                        {alerts.map((alert, index) => (
+                            <li key={index}>{alert.description}</li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        };
+
+        // Update here to use createRoot
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<WeatherApp />);
+
+    </script>
+</body>
+</html>
